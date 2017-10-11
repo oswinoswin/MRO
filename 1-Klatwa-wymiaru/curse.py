@@ -1,6 +1,9 @@
 import math
 import random
-
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import csv
 
 def calculate_center(R, dimension):
     center = []
@@ -24,7 +27,7 @@ def is_in_sphere(dist, R):
 def random_point(MaxSize, dimension):
     point = []
     for x in range(0, dimension):
-        point.append(random.randint(0, MaxSize))
+        point.append(random.uniform(0, MaxSize))
     return point
 
 
@@ -42,6 +45,23 @@ def experiment(N, dimension, R):
 
 
 if __name__ == '__main__':
-    #for n in range(10, 100000):
-    print('{}'.format(experiment(1000, 5, 100000)))
+    #checking points number, n = 1000
+    expected = 0.52
+    R = 0.5
+    MazSize = 2*R
+    result = np.array([experiment(10, 3, R), 10])
+
+    with open('data/eggs.csv', 'w', newline='') as csvfile:
+        csvfile.writelines('{},{},{}\n'.format("points", "value", "error"))
+        for n in range(11, 2000):
+            resulcik = experiment(n, 3, R)
+            #print('{}, {}, {}'.format(n,resulcik, resulcik - expected ))
+            csvfile.writelines('{0:.1f}, {1:.2f}, {2:.3f}\n'.format(n, resulcik, resulcik - expected))
+            result = np.append(result, [ resulcik, n], axis=0)
+
+
+    #print('{}'.format(result))
+
+    #sns.tsplot(data=result)
+    #plt.show()
 
