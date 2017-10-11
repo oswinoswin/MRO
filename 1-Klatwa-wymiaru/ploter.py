@@ -8,9 +8,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-my_data = pd.read_csv('data/eggs.csv')
+my_data = pd.read_csv('data/eggs6.csv')
 x = my_data['points']
-y = my_data['value']
+y = my_data['error']
 print('{}'.format(y))
 plt.plot(x, y)
 plt.show()
