@@ -73,20 +73,23 @@ def random_partition_init(dane, k):
 
 
 load_data()
-print(data)
+
 data_np = np.array(data)
 
 forgy_init(data_np, 9)
 
-k_means = KMeans(n_clusters=9, random_state=8, init=forgy_init(data, 9), n_init=1, max_iter=800).fit(data_np)
-print(k_means.labels_)
+k_means_random = KMeans(n_clusters=9, random_state=1, init='random', n_init=1, max_iter=800).fit(data_np)
+k_means_random_partition = KMeans(n_clusters=9, random_state=8, init=random_partition_init(data_np, 9), n_init=1, max_iter=800).fit(data_np)
+k_means_forgy = KMeans(n_clusters=9, random_state=8, init=forgy_init(data_np, 9), n_init=1, max_iter=800).fit(data_np)
+k_means_plus = KMeans(n_clusters=9, random_state=8, init='k-means++', n_init=1, max_iter=800).fit(data_np)
+
 
 
 
 plt.title("k-means")
 plt.xlabel("x")
 plt.ylabel("y")
-plt.scatter(data_np[:, 0], data_np[:, 1], c=k_means.labels_)
+plt.scatter(data_np[:, 0], data_np[:, 1], c=k_means_forgy.labels_)
 plt.show()
 
 '''
